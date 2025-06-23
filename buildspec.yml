@@ -1,0 +1,15 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo "Installing dependencies..."
+  build:
+    commands:
+      - echo "Deploying to S3..."
+      - aws s3 cp index.html s3://day2-static-site-ardevopsun/index.html
+      - aws cloudfront create-invalidation --distribution-id E7QHYCMJ38QAY --paths "/index.html" || echo "Invalidation skipped"
+
+artifacts:
+  files:
+    - index.html
